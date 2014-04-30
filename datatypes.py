@@ -2,6 +2,9 @@
 
 class Strategy:
 
+    COOPERATE = 1
+    DEFECT = 0
+
     def __repr__(self):
         return "Strategy <{}>".format(self.__class__.__name__)
 
