@@ -37,15 +37,15 @@ def run_championship(strat_list):
             global_history[i,round, 1] = action2
     return global_history
 
-def plot_game(global_history, labels):
+def plot_game(global_history, strats):
     x = np.arange(global_history.shape[1])
     fig = pl.figure()
     ax = fig.add_subplot(111)
     pairings = list(pairs(range(len(labels))))
     ylabels = []
     for p in range(global_history.shape[0]):
-        label1 = labels[pairings[p][0]]
-        label2 = labels[pairings[p][1]]
+        label1 = str(strats[pairings[p][0]])
+        label2 = str(strats[pairings[p][1]])
         label = label1 + " vs. " + label2
         ylabels.append(label)
         y1 = (global_history[p, :, 0] - 0.5) * 0.5 + p
@@ -71,7 +71,7 @@ def main():
 
 
     results = run_championship(possible_strats)
-    plot_game(results)
+    plot_game(results, possible_strats)
 
 if __name__ == "__main__":
     main()
