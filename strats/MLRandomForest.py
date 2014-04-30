@@ -10,8 +10,8 @@ class MLRandomForest(Strategy):
 
     # input variable is the M previous choices from both parties
     # output variable is the choice made by the opponent that you want to predict
-    M = 9
-    clf = RandomForestClassifier(n_estimators=10)
+    M = 20
+    clf = RandomForestClassifier(n_estimators=30)
 
     def __init__(self):
         self.train_classifier()
@@ -30,7 +30,7 @@ class MLRandomForest(Strategy):
         X = np.zeros(2*self.M)
         X[0:self.M] = theirs
         X[self.M:2*self.M] = mine
-        return self.clf.predict(X)
+        return int(self.clf.predict(X)[0])
 
 
     
