@@ -1,6 +1,6 @@
-import multiprocessing
 from datatypes import Strategy
 import strats
+import multiprocessing
 from strats.MLRandomForest import MLRandomForest
 import zmq
 import time
@@ -10,7 +10,6 @@ mapping = {
     b'C': Strategy.COOPERATE,
     b'D': Strategy.DEFECT
 }
-
 
 class ZMQPlayer:
 
@@ -25,7 +24,7 @@ class ZMQPlayer:
         self.turn = 0
 
     def run(self):
-        print("Running new program")
+        print("Running new thread")
 
         # define the handlers
         handlers = {'ping': self.ping, 'iterate': self.iterate, 'reset': self.reset}
@@ -91,16 +90,13 @@ class ZMQPlayer:
 
 
 
-possible_strats = []
-params = [
-    0, 0.05, 0.1, 0.25, 0.3, 0.5, 0.75, 0.9, 0.95,
-    1.0]
-for Strat in strats.all_strategy_classes:
-    if Strat.takes_parameter:
-        for param in params:
-            possible_strats.append(Strat(param))
-    else:
-        possible_strats.append(Strat())
+possible_strats = [
+    strats.NaivePeaceMaker(1.0),
+    strats.NaivePeaceMaker(1.0),
+    strats.RemorsefulProber(0.05),
+    strats.MLRandomForest(),
+    strats.TitForTatsRand(0.0)
+]
 
 
 if __name__ == "__main__":
@@ -111,6 +107,5 @@ if __name__ == "__main__":
         t = multiprocessing.Process(target=z.run)
         threads.append(t)
         t.start()
-
 
 
