@@ -8,8 +8,8 @@ number_of_rounds = 10
 # Strategy.DEFECT
 
 def pairs(s):
-    for i in xrange(0, len(s)-1):
-        for j in xrange(i+1, len(s)):
+    for i in range(0, len(s)-1):
+        for j in range(i+1, len(s)):
             yield (s[i], s[j])
 
 game_array = np.array([[5,3],[3,1]])
@@ -22,10 +22,10 @@ def roundPoints(strat1, strat2):
 
 def run_championship(strat_list):
     nstrats = len(strat_list)
-    pairings = list(pairs(xrange(nstrats)))
+    pairings = list(pairs(range(nstrats)))
     npairings = len(pairings)
     global_history = np.zeros((npairings, number_of_rounds, 2))
-    for round in xrange(number_of_rounds):
+    for round in range(number_of_rounds):
         for i, p in enumerate(pairings):
             idx1 = p[0]
             idx2 = p[1]
@@ -38,14 +38,24 @@ def run_championship(strat_list):
     return global_history
 
 def plot_game(global_history):
-    pass
+    x = np.arange(global_history.shape[1])
+    fig = pl.figure()
+    ax = fig.add_subplot(111)
+    for p in range(global_history.shape[0]):
+        y1 = global_history[p, :, 0] - 0.25 + p
+        y2 = global_history[p, :, 1] - 0.25 + p
+        ax.plot(x,y1, 'r-', x, y2, 'b')
+    pl.show()
+
+
+
 
 def main():
     possible_strats = [strats.AlwaysCooperate(),
                        strats.AlwaysDefect(),
                        strats.TitForTat()]
     results = run_championship(possible_strats)
-    print results
+    plot_game(results)
 
 if __name__ == "__main__":
     main()
