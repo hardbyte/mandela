@@ -1,5 +1,6 @@
 import strats
 import numpy as np
+import matplotlib.pyplot as pl
 
 number_of_rounds = 10
 
@@ -30,8 +31,8 @@ def run_championship(strat_list):
             idx2 = p[1]
             hist1 = global_history[:, i, 0]
             hist2 = global_history[:, i, 1]
-            action1 = strat_list[idx1].determine_action(hist1, hist2)
-            action2 = strat_list[idx2].determine_action(hist2, hist1)
+            action1 = strat_list[idx1].determine_action(hist1, hist2, round)
+            action2 = strat_list[idx2].determine_action(hist2, hist1, round)
             global_history[round,i, 0] = action1
             global_history[round,i, 0] = action2
     return global_history
