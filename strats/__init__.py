@@ -4,6 +4,8 @@ from strats.titfortat import TitForTat
 from strats.random_strat import Random
 from strats.titfortatrand import TitForTatRand
 from strats.titfortatsrand import TitForTatsRand
+from strats.remorseful_prober import RemorsefulProber
+from strats.naive_prober import NaiveProber
 
 
 all_strategy_classes = [
@@ -12,7 +14,9 @@ all_strategy_classes = [
     TitForTat,
     Random,
     TitForTatRand,
-    TitForTatsRand
+    TitForTatsRand,
+    RemorsefulProber,
+    NaiveProber
 ]
 
 if __name__ == "__main__":
