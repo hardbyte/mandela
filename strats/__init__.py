@@ -7,6 +7,7 @@ from strats.titfortatrand import TitForTatRand
 from strats.titfortatsrand import TitForTatsRand
 from strats.remorseful_prober import RemorsefulProber
 from strats.naive_prober import NaiveProber
+from strats.MLRandomForest import MLRandomForest
 from strats.naive_peace_maker import NaivePeaceMaker
 from strats.true_peace_maker import TruePeaceMaker
 
@@ -20,13 +21,14 @@ all_strategy_classes = [
     TitForTatsRand,
     RemorsefulProber,
     NaiveProber,
+    MLRandomForest,
     NaivePeaceMaker,
     TruePeaceMaker,
     Grudger
 ]
 
 if __name__ == "__main__":
-    s1 = TruePeaceMaker(0.9)
+    s1 = AlwaysCooperate()
     s2 = TitForTat()
 
     print(s1)
