@@ -10,10 +10,10 @@ class RemorsefulProber(Strategy):
     - Repeat opponent's last choice (ie Tit For Tat), but sometimes
      probe by cooperating in lieu of punishing
     """
+    takes_parameter = True
 
     def __init__(self, skew=0.25):
         self.skew = skew
-        self.takes_parameter = True
 
     def determine_action(self, my_moves, their_moves, turn=0):
         if turn == 0:

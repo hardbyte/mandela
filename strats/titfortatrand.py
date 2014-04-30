@@ -11,10 +11,11 @@ class TitForTatRand(Strategy):
     The constructor takes a float between 0 and 1 where
     0 is all tit for tat and 1 is all random
     """
+    takes_parameter = True
 
     def __init__(self, skew=0.25):
         self.skew = skew
-        self.takes_parameter = True
+
         # super().__init__()
 
     def determine_action(self, my_moves, their_moves, turn=0):

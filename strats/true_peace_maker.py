@@ -13,10 +13,11 @@ class TruePeaceMaker(Strategy):
     Co-operate unless opponent defects twice in a row, then
     defect once, but sometimes make peace by co-operating in lieu of defecting.
     """
+    takes_parameter = True
 
     def __init__(self, skew=0.25):
         self.skew = skew
-        self.takes_parameter = True
+
 
     def determine_action(self, my_moves, their_moves, turn=0):
         if turn == 0:

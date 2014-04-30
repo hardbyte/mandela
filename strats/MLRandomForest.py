@@ -8,7 +8,6 @@ from sklearn.cross_validation import cross_val_score
 
 
 class MLRandomForest(Strategy):
-
     # input variable is the M previous choices from both parties
     # output variable is the choice made by the opponent that you want to predict
     M = 17
@@ -23,18 +22,17 @@ class MLRandomForest(Strategy):
             return initial.determine_action(my_moves, their_moves, turn)
         else:
             # call trained classifier on last M moves
-            return self.predict_move(my_moves[turn-self.M:turn], their_moves[turn-self.M:turn])
- 
+            return self.predict_move(my_moves[turn - self.M:turn], their_moves[turn - self.M:turn])
+
 
     def predict_move(self, mine, theirs):
         # predict their move means put their data features first
-        X = np.zeros(2*self.M)
+        X = np.zeros(2 * self.M)
         X[0:self.M] = theirs
-        X[self.M:2*self.M] = mine
+        X[self.M:2 * self.M] = mine
         return int(self.clf.predict(X)[0])
 
 
-    
     def train_classifier(self):
         """
 
@@ -44,8 +42,8 @@ class MLRandomForest(Strategy):
         We then swap player1 and player2, to add the value that player 2 chose.
 
         """
-        training_array = np.load("trainingdata.npy");
-        (npair, nround, nres) = training_array.shape;
+        training_array = np.load("trainingdata.npy")
+        (npair, nround, nres) = training_array.shape
         nstep = int(nround / self.M) - 1
 #        print nstep, npair, nround, nres, nstep*npair*2
         X = np.zeros((2*npair*nstep,2*self.M))
@@ -61,6 +59,7 @@ class MLRandomForest(Strategy):
                 X[2*nstep*i+2*k+1,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,0]
                 Y[2*nstep*i+2*k+1] = instance[(k+1)*self.M,1]
         self.clf.fit(X, Y)
+
 #        print self.clf.score(X,Y)
 #        scores = cross_val_score(self.clf, X, Y)
 #        print scores.mean()
