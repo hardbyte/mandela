@@ -5,6 +5,8 @@ class Strategy:
     COOPERATE = 1
     DEFECT = 0
 
+    takes_parameter = False
+
     def __repr__(self):
         return "Strategy <{}>".format(self.__class__.__name__)
 

@@ -60,25 +60,18 @@ def plot_game(global_history, labels):
 
 
 def main():
-    possible_strats = [strats.AlwaysCooperate(),
-                       strats.AlwaysDefect(),
-                       strats.TitForTat(),
-                       strats.TitForTatRand(0.05),
-                       strats.TitForTatRand(0.25),
-                       strats.TitForTatRand(0.5),
-                       strats.TitForTatRand(0.75),
-                       strats.TitForTatRand(0.95)]
-    
-    labels = [  "AlwaysCooperate",
-                "AlwaysDefect",
-                "TitForTat",
-                "TitForTatRand0.05",
-                "TitForTatRand0.25",
-                "TitForTatRand0.5",
-                "TitForTatRand0.75",
-                "TitForTatRand0.95"]
+    possible_strats = []
+    params = [0, 0.05, 0.25, 0.3, 0.5, 0.75, 0.9, 0.95, 1.0]
+    for Strat in strats.all_strategy_classes:
+        if Strat.takes_parameter:
+            for param in params:
+                possible_strats.append(Strat(param))
+        else:
+            possible_strats.append(Strat())
+
+
     results = run_championship(possible_strats)
-    plot_game(results, labels)
+    plot_game(results)
 
 if __name__ == "__main__":
     main()

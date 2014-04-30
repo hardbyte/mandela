@@ -3,7 +3,17 @@ from strats.always_defect import AlwaysDefect
 from strats.titfortat import TitForTat
 from strats.random_strat import Random
 from strats.titfortatrand import TitForTatRand
+from strats.titfortatsrand import TitForTatsRand
 
+
+all_strategy_classes = [
+    AlwaysCooperate,
+    AlwaysDefect,
+    TitForTat,
+    Random,
+    TitForTatRand,
+    TitForTatsRand
+]
 
 if __name__ == "__main__":
     s1 = AlwaysCooperate()
