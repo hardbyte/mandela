@@ -42,9 +42,9 @@ def plot_game(global_history):
     fig = pl.figure()
     ax = fig.add_subplot(111)
     for p in range(global_history.shape[0]):
-        y1 = global_history[p, :, 0] - 0.25 + p
-        y2 = global_history[p, :, 1] - 0.25 + p
-        ax.plot(x,y1, 'r-', x, y2, 'b')
+        y1 = (global_history[p, :, 0] - 0.5) * 0.5 + p
+        y2 = (global_history[p, :, 1] - 0.5) * 0.5 + p
+        ax.plot(x,y1, 'r-', x, y2, 'b-')
     pl.show()
 
 
@@ -53,7 +53,13 @@ def plot_game(global_history):
 def main():
     possible_strats = [strats.AlwaysCooperate(),
                        strats.AlwaysDefect(),
-                       strats.TitForTat()]
+                       strats.TitForTat(),
+                       strats.TitForTatRand(0.05),
+                       strats.TitForTatRand(0.25),
+                       strats.TitForTatRand(0.5),
+                       strats.TitForTatRand(0.75),
+                       strats.TitForTatRand(0.95)
+    ]
     results = run_championship(possible_strats)
     plot_game(results)
 
