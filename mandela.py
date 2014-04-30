@@ -34,7 +34,7 @@ def run_championship(strat_list):
             action1 = strat_list[idx1].determine_action(hist1, hist2, round)
             action2 = strat_list[idx2].determine_action(hist2, hist1, round)
             global_history[round,i, 0] = action1
-            global_history[round,i, 0] = action2
+            global_history[round,i, 1] = action2
     return global_history
 
 def main():
