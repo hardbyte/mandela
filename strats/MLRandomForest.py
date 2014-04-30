@@ -2,6 +2,7 @@ from datatypes import Strategy
 from strats import TitForTat
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
+from sklearn.cross_validation import cross_val_score
 
 # Output variable
 
@@ -10,8 +11,8 @@ class MLRandomForest(Strategy):
 
     # input variable is the M previous choices from both parties
     # output variable is the choice made by the opponent that you want to predict
-    M = 9
-    clf = RandomForestClassifier(n_estimators=10)
+    M = 17
+    clf = RandomForestClassifier(n_estimators=20)
 
     def __init__(self):
         self.train_classifier()
@@ -46,18 +47,20 @@ class MLRandomForest(Strategy):
         training_array = np.load("trainingdata.npy");
         (npair, nround, nres) = training_array.shape;
         nstep = int(nround / self.M) - 1
-#        print nstep, npair, nround, nres
+#        print nstep, npair, nround, nres, nstep*npair*2
         X = np.zeros((2*npair*nstep,2*self.M))
         Y = np.zeros(2*npair*nstep)
         for i, instance in enumerate(training_array):
             for k in range(0,nstep):
 # first one way around
-                X[nstep*i+2*k,0:self.M] = instance[k*self.M:(k+1)*self.M,0]
-                X[nstep*i+2*k,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,1]
-                Y[nstep*i+2*k] = instance[(k+1)*self.M,0]
+                X[2*nstep*i+2*k,0:self.M] = instance[k*self.M:(k+1)*self.M,0]
+                X[2*nstep*i+2*k,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,1]
+                Y[2*nstep*i+2*k] = instance[(k+1)*self.M,0]
 # now the other way around
-                X[nstep*i+2*k+1,0:self.M] = instance[k*self.M:(k+1)*self.M,1]
-                X[nstep*i+2*k+1,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,0]
-                Y[nstep*i+2*k+1] = instance[(k+1)*self.M,1]
+                X[2*nstep*i+2*k+1,0:self.M] = instance[k*self.M:(k+1)*self.M,1]
+                X[2*nstep*i+2*k+1,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,0]
+                Y[2*nstep*i+2*k+1] = instance[(k+1)*self.M,1]
         self.clf.fit(X, Y)
 #        print self.clf.score(X,Y)
+#        scores = cross_val_score(self.clf, X, Y)
+#        print scores.mean()
