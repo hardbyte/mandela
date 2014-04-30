@@ -2,7 +2,7 @@ import strats
 import numpy as np
 import matplotlib.pyplot as pl
 
-number_of_rounds = 10
+number_of_rounds = 1000
 
 # Strategy.COOPERATE
 # Strategy.DEFECT
@@ -37,14 +37,23 @@ def run_championship(strat_list):
             global_history[i,round, 1] = action2
     return global_history
 
-def plot_game(global_history):
+def plot_game(global_history, labels):
     x = np.arange(global_history.shape[1])
     fig = pl.figure()
     ax = fig.add_subplot(111)
+    pairings = list(pairs(range(len(labels))))
+    ylabels = []
     for p in range(global_history.shape[0]):
+        label1 = labels[pairings[p][0]]
+        label2 = labels[pairings[p][1]]
+        label = label1 + " vs. " + label2
+        ylabels.append(label)
         y1 = (global_history[p, :, 0] - 0.5) * 0.5 + p
         y2 = (global_history[p, :, 1] - 0.5) * 0.5 + p
         ax.plot(x,y1, 'r-', x, y2, 'b-')
+
+    ax.set_yticks(np.arange(len(ylabels)))
+    ax.set_yticklabels(ylabels)
     pl.show()
 
 
@@ -58,10 +67,18 @@ def main():
                        strats.TitForTatRand(0.25),
                        strats.TitForTatRand(0.5),
                        strats.TitForTatRand(0.75),
-                       strats.TitForTatRand(0.95)
-    ]
+                       strats.TitForTatRand(0.95)]
+    
+    labels = [  "AlwaysCooperate",
+                "AlwaysDefect",
+                "TitForTat",
+                "TitForTatRand0.05",
+                "TitForTatRand0.25",
+                "TitForTatRand0.5",
+                "TitForTatRand0.75",
+                "TitForTatRand0.95"]
     results = run_championship(possible_strats)
-    plot_game(results)
+    plot_game(results, labels)
 
 if __name__ == "__main__":
     main()
