@@ -46,7 +46,7 @@ class MLRandomForest(Strategy):
         training_array = np.load("trainingdata.npy");
         (npair, nround, nres) = training_array.shape;
         nstep = int(nround / self.M) - 1
-        print nstep, npair, nround, nres
+#        print nstep, npair, nround, nres
         X = np.zeros((2*npair*nstep,2*self.M))
         Y = np.zeros(2*npair*nstep)
         for i, instance in enumerate(training_array):
@@ -60,4 +60,4 @@ class MLRandomForest(Strategy):
                 X[nstep*i+2*k+1,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,0]
                 Y[nstep*i+2*k+1] = instance[(k+1)*self.M,1]
         self.clf.fit(X, Y)
-        print self.clf.score(X,Y)
+#        print self.clf.score(X,Y)
