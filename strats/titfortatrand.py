@@ -14,6 +14,7 @@ class TitForTatRand(Strategy):
 
     def __init__(self, skew=0.25):
         self.skew = skew
+        self.takes_parameter = True
         # super().__init__()
 
     def determine_action(self, my_moves, their_moves, turn=0):
