@@ -37,7 +37,6 @@ def run_championship(strat_list):
             global_history[round,i, 1] = action2
     return global_history
 
-
 def main():
     possible_strats = [strats.AlwaysCooperate(),
                        strats.AlwaysDefect(),
