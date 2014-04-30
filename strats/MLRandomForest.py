@@ -10,8 +10,8 @@ class MLRandomForest(Strategy):
 
     # input variable is the M previous choices from both parties
     # output variable is the choice made by the opponent that you want to predict
-    M = 20
-    clf = RandomForestClassifier(n_estimators=30)
+    M = 9
+    clf = RandomForestClassifier(n_estimators=10)
 
     def __init__(self):
         self.train_classifier()
