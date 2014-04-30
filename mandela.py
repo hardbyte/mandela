@@ -41,7 +41,7 @@ def plot_game(global_history, strats):
     x = np.arange(global_history.shape[1])
     fig = pl.figure()
     ax = fig.add_subplot(111)
-    pairings = list(pairs(range(len(labels))))
+    pairings = list(pairs(range(len(strats))))
     ylabels = []
     for p in range(global_history.shape[0]):
         label1 = str(strats[pairings[p][0]])
