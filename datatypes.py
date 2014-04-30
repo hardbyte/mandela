@@ -8,10 +8,12 @@ class Strategy:
     def __repr__(self):
         return "Strategy <{}>".format(self.__class__.__name__)
 
-    def determine_action(self, history, turn=0):
+    def determine_action(self, my_moves, their_moves, turn=0):
         """
-        History is a 2 X n numpy array
-        Turn is the index
+        my_moves is a 1xn numpy array
+        their_moves is a 1xn numpy array
+
+        Turn is the current turn number
 
         Returns int: defect = 0, cooperate = 1
         """

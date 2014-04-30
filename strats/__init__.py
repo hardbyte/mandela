@@ -4,6 +4,10 @@ from strats.titfortat import *
 
 
 if __name__ == "__main__":
-    s = AlwaysCooperate()
+    s1 = AlwaysCooperate()
+    s2 = TitForTat()
 
-    print(s)
+    print(s1)
+    print(s2)
+
+    print(s2.determine_action([0,1], [1,0], 1))
