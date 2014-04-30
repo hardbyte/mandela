@@ -6,6 +6,7 @@ from strats.titfortatrand import TitForTatRand
 from strats.titfortatsrand import TitForTatsRand
 from strats.remorseful_prober import RemorsefulProber
 from strats.naive_prober import NaiveProber
+from strats.MLRandomForest import MLRandomForest
 
 
 all_strategy_classes = [
@@ -16,7 +17,8 @@ all_strategy_classes = [
     TitForTatRand,
     TitForTatsRand,
     RemorsefulProber,
-    NaiveProber
+    NaiveProber,
+    MLRandomForest
 ]
 
 if __name__ == "__main__":

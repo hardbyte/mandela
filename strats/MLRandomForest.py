@@ -1,7 +1,7 @@
 from datatypes import Strategy
-
+from strats import TitForTat
 from sklearn.ensemble import RandomForestClassifier
-
+import numpy as np
 
 # Output variable
 
@@ -10,49 +10,54 @@ class MLRandomForest(Strategy):
 
     # input variable is the M previous choices from both parties
     # output variable is the choice made by the opponent that you want to predict
-    M = 10
+    M = 9
     clf = RandomForestClassifier(n_estimators=10)
 
+    def __init__(self):
+        self.train_classifier()
+
     def determine_action(self, my_moves, their_moves, turn=0):
-        if (turn < M):
-            return TitForTat(self, my_moves, their_moves, turn)
+        initial = TitForTat()
+        if (turn < self.M):
+            return initial.determine_action(my_moves, their_moves, turn)
         else:
             # call trained classifier on last M moves
-            return predict_move(self, my_moves[turn-M:turn], their_moves[turn-M:turn])
+            return self.predict_move(my_moves[turn-self.M:turn], their_moves[turn-self.M:turn])
  
 
     def predict_move(self, mine, theirs):
         # predict their move means put their data features first
-        X = np.zeros(2*M)
-        X[0:M] = theirs
-        X[M:2*M] = mine
-        return clf.predict(X)
+        X = np.zeros(2*self.M)
+        X[0:self.M] = theirs
+        X[self.M:2*self.M] = mine
+        return self.clf.predict(X)
 
 
     
-    def train_classifier(self, training_array):
+    def train_classifier(self):
         """
-        training_array is a numpy array of Nstratpairs * N * 2 numpy arrays
 
         We make a large numpy array that holds the last M choices from player1
         then the last M choices from player2, and the target array has the 
         value that player 1 chose.
         We then swap player1 and player2, to add the value that player 2 chose.
 
-        Returns int: defect = 0, cooperate = 1
         """
+        training_array = np.load("trainingdata.npy");
         (npair, nround, nres) = training_array.shape;
-        nstep = int(nround / M)
-        X = np.zeros((2*npair*nstep,2*M))
-        Y = np.zeros(2*npair)
+        nstep = int(nround / self.M) - 1
+        print nstep, npair, nround, nres
+        X = np.zeros((2*npair*nstep,2*self.M))
+        Y = np.zeros(2*npair*nstep)
         for i, instance in enumerate(training_array):
             for k in range(0,nstep):
 # first one way around
-                X[nstep*i+2*k,0:M] = instance[k*M:(k+1)*M,0]
-                X[nstep*i+2*k,M:2*M] = instance[k*M:(k+1)*M,1]
-                Y[nstep*i+2*k] = instance[(k+1)*M,0]
+                X[nstep*i+2*k,0:self.M] = instance[k*self.M:(k+1)*self.M,0]
+                X[nstep*i+2*k,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,1]
+                Y[nstep*i+2*k] = instance[(k+1)*self.M,0]
 # now the other way around
-                X[nstep*i+2*k+1,0:M] = instance[k*M:(k+1)*M,1]
-                X[nstep*i+2*k+1,M:2*M] = instance[k*M:(k+1)*M,0]
-                Y[nstep*i+2*k+1] = instance[(k+1)*M,1]
-        clf = clf.fit(X, Y)
+                X[nstep*i+2*k+1,0:self.M] = instance[k*self.M:(k+1)*self.M,1]
+                X[nstep*i+2*k+1,self.M:2*self.M] = instance[k*self.M:(k+1)*self.M,0]
+                Y[nstep*i+2*k+1] = instance[(k+1)*self.M,1]
+        self.clf.fit(X, Y)
+        print self.clf.score(X,Y)
