@@ -10,7 +10,7 @@ from strats.naive_prober import NaiveProber
 from strats.MLRandomForest import MLRandomForest
 from strats.naive_peace_maker import NaivePeaceMaker
 from strats.true_peace_maker import TruePeaceMaker
-from strats.pavlov import Pavlov
+from strats.pavlov import Pavlov, PavlovRandom
 
 
 all_strategy_classes = [
@@ -26,7 +26,8 @@ all_strategy_classes = [
     NaivePeaceMaker,
     TruePeaceMaker,
     Grudger,
-    Pavlov
+    Pavlov,
+    PavlovRandom
 ]
 
 if __name__ == "__main__":
