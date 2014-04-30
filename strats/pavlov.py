@@ -38,7 +38,7 @@ class PavlovRandom(Strategy):
     """
     takes_parameter = True
 
-    def __init__(self, skew):
+    def __init__(self, skew=0.85):
         self.skew = skew
 
     def determine_action(self, my_moves, their_moves, turn=0):
