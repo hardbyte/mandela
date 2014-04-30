@@ -1,7 +1,8 @@
-from strats.always_cooperate import *
-from strats.always_defect import *
-from strats.titfortat import *
-from strats.random_strat import *
+from strats.always_cooperate import AlwaysCooperate
+from strats.always_defect import AlwaysDefect
+from strats.titfortat import TitForTat
+from strats.random_strat import Random
+from strats.titfortatrand import TitForTatRand
 
 
 if __name__ == "__main__":
