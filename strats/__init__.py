@@ -1,6 +1,7 @@
 from strats.always_cooperate import *
 from strats.always_defect import *
 from strats.titfortat import *
+from strats.random_strat import *
 
 
 if __name__ == "__main__":
